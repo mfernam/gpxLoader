@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule,MatIconModule } from '@angular/material';
+import { MatToolbarModule,MatIconModule,MatButtonModule } from '@angular/material';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppComponent } from './app.component';
@@ -19,7 +19,8 @@ import { MapComponent } from './components/map/map.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    LeafletModule.forRoot()
+    LeafletModule.forRoot(),
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

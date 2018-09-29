@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+  fileInput:string = "";
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onFileInput($event){
+    console.log(this.fileInput);
   }
 
 }

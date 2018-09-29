@@ -1,6 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>GPX loader</span>&nbsp;
-    <mat-icon class="example-icon">folder</mat-icon>
+    <button mat-icon-button (click)="fileInput.click()"><mat-icon>folder</mat-icon></button>
+    <input #fileInput type="file" style="display:none;" (change)="onFileInput($event)">
   </mat-toolbar-row>
 </mat-toolbar>
