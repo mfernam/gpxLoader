@@ -2,6 +2,6 @@
   <mat-toolbar-row>
     <span>GPX loader</span>&nbsp;
     <button mat-icon-button (click)="fileInput.click()"><mat-icon>folder</mat-icon></button>
-    <input #fileInput type="file" style="display:none;" (change)="onFileInput($event)">
+    <input #fileInput type="file" style="display:none;" (change)="onFileInput($event)"><h5 *ngIf="_file">(file name: {{ _file.name }} )</h5>
   </mat-toolbar-row>
 </mat-toolbar>
