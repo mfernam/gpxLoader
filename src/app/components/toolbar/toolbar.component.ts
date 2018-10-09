@@ -1,34 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { GeoJsonService } from '../../services/geo-json.service';
+import { Component, Input ,Output,EventEmitter} from '@angular/core';
+import { GeoJSON } from 'leaflet';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit {
-  _file:File;
-  _geoJson:string;
-  constructor( private _geoJsonService:GeoJsonService) {
+export class ToolbarComponent  {
+  public file:File;
+  public geoJson:string;
 
-   }
+  @Output() onLoad = new EventEmitter<any>();
 
-  ngOnInit() {
-  }
+  constructor() {  }
 
+  
   onFileInput(event){
-    let reader = new FileReader();
-    
-    if(event.target.files 
-      && event.target.files.length) {
-        this._file =event.target.files[0];
-        reader.readAsDataURL(this._file);        
-        //reader.readAsText(this._file);
-
-        reader.onload = () => {
-            this._geoJsonService.setData(reader.result);
-        };
-    }
+    this.onLoad.emit(event);
   }
 
 }

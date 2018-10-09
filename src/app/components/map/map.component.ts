@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit,OnDestroy, Input} from '@angular/core';
 import { LatLngBounds,latLngBounds,tileLayer,Layer,latLng,LatLng,GeoJSON,FeatureGroup } from 'leaflet';
-
-import { GeoJsonService } from '../../services/geo-json.service';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 const osmLayer:Layer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
-                  {  
-                    maxZoom: 18, 
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
-                  });
+    {  
+      maxZoom: 18, 
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
+    });
   const pnoaWMS = tileLayer.wms('http://www.ign.es/wms-inspire/pnoa-ma?SERVICE=WMS&', {
     layers:  "OI.OrthoimageCoverage",
     format: 'image/jpeg',
@@ -18,12 +17,13 @@ const osmLayer:Layer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css'],
-  providers: [GeoJsonService]
+  providers: [ ToolbarComponent ],
+  styleUrls: ['./map.component.css']
+
 })
-export class MapComponent implements OnInit, OnDestroy {  
+export class MapComponent implements OnInit,OnDestroy {  
+
   map:any;
-  geoJson:GeoJSON;
   geoJsonLayer:FeatureGroup<Layer> = new FeatureGroup();
 
   
@@ -47,29 +47,32 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   geoJsonStyle:any = {
-    "color": "#ff7800",
-    "weight": 5,
-    "opacity": 0.65
+    "color": "#ff0000",
+    "weight": 15,
+    "opacity": 1
    };
 
-  constructor( private _geoJsonService:GeoJsonService ) {
-    this.geoJson = new GeoJSON(this._geoJsonService.loadData());
+  constructor(  ) { }
+  @Input("file") geoJson:GeoJSON;
+
+   ngOnInit(){
+     console.log(this.geoJson);
+     if(this.geoJson){
+      if(this.geoJson["_layers"]){ 
+        this.geoJsonLayer.addLayer(this.geoJson);
+        this._center = this.geoJsonLayer.getBounds().getCenter();
+        this._bounds = this.geoJsonLayer.getBounds();
+      }
+    }
    }
 
-  ngOnInit() {
-    this.geoJson = new GeoJSON(this._geoJsonService.loadData()).setStyle(this.geoJsonStyle);
-  }
   ngOnDestroy() {
     this.map.remove();
   }
+
   onMapReady(map: L.Map) {
     this.map = map;
-    this.geoJson = new GeoJSON(this._geoJsonService.loadData());
-    if(this.geoJson["_layers"]){ 
-      this.geoJsonLayer.addLayer(this.geoJson).addTo(this.map);
-      this._center = this.geoJsonLayer.getBounds().getCenter();
-      this._bounds = this.geoJsonLayer.getBounds();
-    }
+    
  }
  
  
