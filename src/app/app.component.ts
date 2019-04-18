@@ -10,7 +10,7 @@ import { GeoJsonService } from './services/geo-json.service';
 export class AppComponent {
   title = 'gpxLoader';
   geoJson:GeoJSON;
-  file:File;
+  public file:File;
 
   constructor(private geoJsonService: GeoJsonService){ }
 

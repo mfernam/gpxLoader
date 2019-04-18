@@ -7,12 +7,14 @@ import { GeoJSON } from 'leaflet';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent  {
-  public file:File;
-  public geoJson:string;
+  
+  
+  @Input("file") file:File;
+  @Output("onLoad") onLoad = new EventEmitter<any>();
 
-  @Output() onLoad = new EventEmitter<any>();
-
-  constructor() {  }
+  constructor() { 
+    console.log(this.file);
+   }
 
   
   onFileInput(event){

@@ -1,2 +1,2 @@
-<app-toolbar (onLoad)="onFileInput($event)"></app-toolbar>
+<app-toolbar [file]="file" (onLoad)="onFileInput($event)"></app-toolbar>
 <app-map [file]="geoJson"></app-map>
